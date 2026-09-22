@@ -4,7 +4,7 @@ metadata:
   name: my-custom-app
   namespace: default
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: custom-app
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: kripaion/my-app:9a95cf492e832c77c2827121e583f9a22b22dcbb
+        image: kripaion/my-custom-app:latest
         ports:
         - containerPort: 3000
 ---
@@ -27,7 +27,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: sample-web
+    app: custom-app
   ports:
     - port: 80
       targetPort: 3000
