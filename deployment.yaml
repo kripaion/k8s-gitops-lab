@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: kripaion/my-custom-app:latest
+        image: kripaion/my-app:e9bea8c2a7c98b6a57fdfa1d01ac7ca983a77b6f
         ports:
         - containerPort: 3000
 ---
