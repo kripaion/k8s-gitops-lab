@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sample-web-app
+  name: my-custom-app
   namespace: default
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: sample-web
+      app: custom-app
   template:
     metadata:
       labels:
-        app: sample-web
+        app: custom-app
     spec:
       containers:
-      - name: web
-        image: nginx:alpine
+      - name: app
+        image: kubernetes-user/my-custom-app:latest
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-web-service
+  name: my-custom-service
   namespace: default
 spec:
   type: NodePort
@@ -30,4 +30,4 @@ spec:
     app: sample-web
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 3000
