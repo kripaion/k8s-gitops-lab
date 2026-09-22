@@ -22,17 +22,17 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/my-custom-app:${{ github.sha }}
 
     - name: Update deployment image tag
       run: |
-        # Update image tag in deployment.yaml automatically with the latest git commit sha
-        sed -i 's|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/my-app:${{ github.sha }}|g' deployment.yaml
+        # Update image tag in manifests/deployment.yaml automatically with the latest git commit sha
+        sed -i 's|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/my-custom-app:${{ github.sha }}|g' manifests/deployment.yaml
 
         # Configure git user to commit changes
         git config --global user.name "GitHub Actions Bot"
         git config --global user.email "bot@github.com"
 
-        git add deployment.yaml
+        git add manifests/deployment.yaml
         git commit -m "Update image tag to ${{ github.sha }}"
         git push origin main
