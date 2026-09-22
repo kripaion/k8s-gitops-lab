@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: kubernetes-user/my-custom-app:latest
+        image: kripaion/my-app:9a95cf492e832c77c2827121e583f9a22b22dcbb
         ports:
         - containerPort: 3000
 ---
