@@ -1,0 +1,20 @@
+i
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ai-assistant
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/kripaion/k8s-gitops-lab.git'
+    targetRevision: main
+    path: manifests/ai-assistant
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
