@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: ollama
   namespace: default
+  annotations:
+    consul.hashicorp.com/connect-inject: "false"
 spec:
   replicas: 1
   selector:
@@ -62,6 +64,8 @@ kind: Deployment
 metadata:
   name: open-webui
   namespace: default
+  annotations:
+    consul.hashicorp.com/connect-inject: "false"
 spec:
   replicas: 1
   selector:
@@ -100,4 +104,4 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-    
+      nodePort: 31991
