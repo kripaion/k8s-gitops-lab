@@ -16,24 +16,29 @@ spec:
         app: ollama
     spec:
       containers:
-      - name: ollama
-        image: ollama/ollama:latest
-        ports:
-        - containerPort: 11434
-        resources:
-          limits:
-            cpu: "2"
-            memory: 4Gi
-          requests:
-            cpu: "500m"
-            memory: 1Gi
-        volumeMounts:
-        - mountPath: /root/.ollama
-          name: ollama-storage
+        - name: ollama
+          image: ollama/ollama:latest
+          ports:
+            - containerPort: 11434
+          env:
+            - name: OLLAMA_KEEP_ALIVE
+              value: "24h"
+            - name: OLLAMA_NUM_PARALLEL
+              value: "4"
+          resources:
+            limits:
+              cpu: "2"
+              memory: 4Gi
+            requests:
+              cpu: "500m"
+              memory: 1Gi
+          volumeMounts:
+            - mountPath: /root/.ollama
+              name: ollama-storage
       volumes:
-      - name: ollama-storage
-        persistentVolumeClaim:
-          claimName: ollama-pvc
+        - name: ollama-storage
+          persistentVolumeClaim:
+            claimName: ollama-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -45,7 +50,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+              storage: 20Gi
 ---
 apiVersion: v1
 kind: Service
@@ -77,20 +82,20 @@ spec:
         app: open-webui
     spec:
       containers:
-      - name: open-webui
-        image: ghcr.io/open-webui/open-webui:main
-        ports:
-        - containerPort: 8080
-        env:
-        - name: OLLAMA_BASE_URL
-          value: "http://ollama-service:11434"
-        resources:
-          limits:
-            cpu: "1"
-            memory: 2Gi
-          requests:
-            cpu: "200m"
-            memory: 512Mi
+        - name: open-webui
+          image: ghcr.io/open-webui/open-webui:main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: OLLAMA_BASE_URL
+              value: "http://ollama-service:11434"
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: "200m"
+              memory: 512Mi
 ---
 apiVersion: v1
 kind: Service
